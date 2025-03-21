@@ -192,8 +192,3 @@ jobs:
         shell: bash
         run: |
           bash .github/scripts/python.sh -t
-
-      - name: Package
-        shell: bash
-        run: |
-          bash .github/scripts/python.sh -p
