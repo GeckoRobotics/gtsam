@@ -82,6 +82,28 @@ function test()
   # cmake --build build --target python-test-unstable
 }
 
+function package()
+{
+  mkdir -p $CURRDIR/wheelhouse
+
+  cd $GITHUB_WORKSPACE/python
+  $PYTHON setup.py bdist_wheel
+  cp ./dist/*.whl $CURRDIR/wheelhouse/
+
+  pip install delvewheel
+
+  for whl in ./dist/*.whl; do
+    delvewheel repair "$whl" -w $CURRDIR/wheelhouse/
+  done
+
+  for whl in $CURRDIR/wheelhouse/*.whl; do
+    new_filename=$(echo $whl | sed "s#\.none-win_amd64\.#.#g")
+    new_filename=$(echo $new_filename | sed "s#\.win_amd64\.#.#g") # For 37 and 38
+    new_filename=$(echo $new_filename | sed "s#-none-#-#g")
+    mv $whl $new_filename
+  done
+}
+
 # select between build or test
 case $1 in
   -d)
@@ -92,5 +114,8 @@ case $1 in
     ;;
   -t)
     test
+    ;;
+  -p)
+    package
     ;;
 esac

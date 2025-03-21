@@ -1,6 +1,11 @@
 name: Python CI
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - develop
+    types: [ opened, synchronize, reopened, labeled ]
+  workflow_dispatch:
 
 # Every time you make a push to your PR, it cancel immediately the previous checks,
 # and start a new one. The other runner will be available more quickly to your PR.
@@ -36,7 +41,7 @@ jobs:
           ]
 
         build_type: [Release]
-        python_version: [3]
+        python_version: [3.11]
         include:
           - name: ubuntu-20.04-gcc-9
             os: ubuntu-20.04
@@ -187,3 +192,8 @@ jobs:
         shell: bash
         run: |
           bash .github/scripts/python.sh -t
+
+      - name: Package
+        shell: bash
+        run: |
+          bash .github/scripts/python.sh -p

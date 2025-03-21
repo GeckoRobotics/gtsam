@@ -1,9 +1,14 @@
 name: Windows CI
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - develop
+    types: [ opened, synchronize, reopened, labeled ]
+  workflow_dispatch:
 
-# Every time you make a push to your PR, it cancel immediately the previous checks, 
-# and start a new one. The other runner will be available more quickly to your PR. 
+# Every time you make a push to your PR, it cancel immediately the previous checks,
+# and start a new one. The other runner will be available more quickly to your PR.
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -109,7 +114,7 @@ jobs:
       - name: Configuration
         shell: bash
         run: |
-          export CMAKE_GENERATOR=Ninja 
+          export CMAKE_GENERATOR=Ninja
           cmake -E remove_directory build
           cmake -B build \
                 -S . \
