@@ -41,7 +41,7 @@ jobs:
           ]
 
         build_type: [Release]
-        python_version: [3.11]
+        python_version: [3]
         include:
           - name: ubuntu-20.04-gcc-9
             os: ubuntu-20.04
@@ -124,7 +124,7 @@ jobs:
         uses: actions/setup-python@v5
         if: runner.os == 'Windows'
         with:
-          python-version: ${{ matrix.python_version }}
+          python-version: '3.11'
 
       - name: Install ninja (Windows)
         if: runner.os == 'Windows'
