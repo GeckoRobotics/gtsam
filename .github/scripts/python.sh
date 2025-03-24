@@ -23,7 +23,7 @@ if [ -z ${PYTHON_VERSION+x} ]; then
     exit 127
 fi
 
-export PYTHON="python${PYTHON_VERSION}"
+export PYTHON="python3"
 
 function install_dependencies()
 {
@@ -95,7 +95,7 @@ function package()
   pip install delvewheel
 
   for whl in ./dist/*.whl; do
-    delvewheel repair "$whl" -w $CURRDIR/wheelhouse/
+    delvewheel repair --ignore-in-wheel "$whl" -w $CURRDIR/wheelhouse/
   done
 
   for whl in $CURRDIR/wheelhouse/*.whl; do
