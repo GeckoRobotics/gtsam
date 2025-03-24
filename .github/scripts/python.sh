@@ -98,7 +98,9 @@ function package()
     delvewheel repair --ignore-in-wheel "$whl" -w $GITHUB_WORKSPACE/wheelhouse/
   done
 
-  for whl in $GITHUB_WORKSPACE/wheelhouse/*.whl; do
+  cd $GITHUB_WORKSPACE/wheelhouse/
+
+  for whl in ./*.whl; do
     new_filename=$(echo $whl | sed "s#\.none-win_amd64\.#.#g")
     new_filename=$(echo $new_filename | sed "s#\.win_amd64\.#.#g") # For 37 and 38
     new_filename=$(echo $new_filename | sed "s#-none-#-#g")
