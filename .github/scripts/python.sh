@@ -23,7 +23,7 @@ if [ -z ${PYTHON_VERSION+x} ]; then
     exit 127
 fi
 
-export PYTHON="python3"
+export PYTHON="python${PYTHON_VERSION}"
 
 function install_dependencies()
 {

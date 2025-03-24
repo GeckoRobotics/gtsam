@@ -41,7 +41,7 @@ jobs:
           ]
 
         build_type: [Release]
-        python_version: [3.11]
+        python_version: [3]
         include:
           - name: ubuntu-20.04-gcc-9
             os: ubuntu-20.04
@@ -174,14 +174,14 @@ jobs:
       - name: Create virtual on MacOS
         if: runner.os == 'macOS'
         run: |
-          python3 -m venv venv
+          python$PYTHON_VERSION -m venv venv
           source venv/bin/activate
           echo "PATH=$(pwd)/venv/bin:$PATH" >> $GITHUB_ENV
           python -m pip install --upgrade pip
 
       - name: Install Python Dependencies
         shell: bash
-        run: python3 -m pip install -r python/dev_requirements.txt
+        run: python$PYTHON_VERSION -m pip install -r python/dev_requirements.txt
 
       - name: Build
         shell: bash
