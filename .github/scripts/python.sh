@@ -84,21 +84,21 @@ function test()
 
 function package()
 {
-  mkdir -p $CURRDIR/wheelhouse
+  mkdir -p $GITHUB_WORKSPACE/wheelhouse
 
   pip install wheel
 
   cd $GITHUB_WORKSPACE/build/python
   $PYTHON setup.py bdist_wheel
-  cp ./dist/*.whl $CURRDIR/wheelhouse/
+  cp ./dist/*.whl $GITHUB_WORKSPACE/wheelhouse/
 
   pip install delvewheel
 
   for whl in ./dist/*.whl; do
-    delvewheel repair --ignore-in-wheel "$whl" -w $CURRDIR/wheelhouse/
+    delvewheel repair --ignore-in-wheel "$whl" -w $GITHUB_WORKSPACE/wheelhouse/
   done
 
-  for whl in $CURRDIR/wheelhouse/*.whl; do
+  for whl in $GITHUB_WORKSPACE/wheelhouse/*.whl; do
     new_filename=$(echo $whl | sed "s#\.none-win_amd64\.#.#g")
     new_filename=$(echo $new_filename | sed "s#\.win_amd64\.#.#g") # For 37 and 38
     new_filename=$(echo $new_filename | sed "s#-none-#-#g")
