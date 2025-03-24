@@ -86,6 +86,8 @@ function package()
 {
   mkdir -p $CURRDIR/wheelhouse
 
+  pip install wheel
+
   cd $GITHUB_WORKSPACE/build/python
   $PYTHON setup.py bdist_wheel
   cp ./dist/*.whl $CURRDIR/wheelhouse/
